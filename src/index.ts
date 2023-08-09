@@ -1,24 +1,52 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLString } from 'graphql';
-import express, { Request, Response } from 'express';
-import { createHandler } from 'graphql-http/lib/use/express';
-import expressPlayground from 'graphql-playground-middleware-express';
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
 
-const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'Query',
-        fields: {
-            hello: {
-                type: GraphQLString,
-                resolve: () => 'world',
-            },
-        },
-    }),
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+const typeDefs = `#graphql
+  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+
+  # This "Book" type defines the queryable fields for every book in our data source.
+  type Book {
+    title: String
+    author: String
+  }
+
+  # The "Query" type is special: it lists all of the available queries that
+  # clients can execute, along with the return type for each. In this
+  # case, the "books" query returns an array of zero or more Books (defined above).
+  type Query {
+    books: [Book]
+  }
+`;
+
+const books = [
+    {
+        title: 'The Awakening',
+        author: 'Kate Chopin',
+    },
+    {
+        title: 'City of Glass',
+        author: 'Paul Auster',
+    },
+];
+
+const resolvers = {
+    Query: {
+        books: () => books,
+    },
+};
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
 });
 
-const app = express();
-app.all('/graphql', createHandler({ schema }));
-app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
+(async () => {
+    const { url } = await startStandaloneServer(server, {
+        listen: { port: 4000 },
+    });
 
-app.listen(3000, () => {
-    console.log('server listening on port 3000');
-});
+    console.log(`🚀  Server ready at: ${url}`);
+})();
