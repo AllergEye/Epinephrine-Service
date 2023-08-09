@@ -1,0 +1,29 @@
+{
+  "name": "epinephrine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "lint:fix": "eslint --fix --max-warnings=0",
+    "format:fix": "prettier . --write"
+  },
+  "author": "Reezan Visram",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.9",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "3.0.1",
+    "typescript": "^5.1.6"
+  },
+  "lint-staged": [
+    "npm run lint:fix",
+    "npm run format:fix"
+  ]
+}
