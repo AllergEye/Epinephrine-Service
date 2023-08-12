@@ -1,0 +1,57 @@
+type Mutation {
+    """
+    The mutation used by a user to sign up
+    """
+    createUser(input: CreateUserInput): CreateUserResponse
+}
+
+type Query {
+    """
+    The query to get a user's username by their id
+    """
+    getUsernameById(input: GetUsernameByIdInput): GetUsernameByIdResponse
+}
+
+input CreateUserInput {
+    """
+    The user's email
+    """
+    email: String!
+    """
+    The user's first name
+    """
+    firstName: String!
+    """
+    The user's last name
+    """
+    lastName: String!
+    """
+    The user's password
+    """
+    password: String!
+}
+
+type CreateUserResponse {
+    """
+    The user's access token, to be stored and used to authenticate every request
+    """
+    accessToken: String
+    """
+    The user's refresh token, to be stored and used to regenerate a new access token when it expires
+    """
+    refreshToken: String
+}
+
+input GetUsernameByIdInput {
+    """
+    The user's id
+    """
+    userId: ID!
+}
+
+type GetUsernameByIdResponse {
+    """
+    The user's username
+    """
+    username: String
+}
