@@ -1,4 +1,4 @@
-import { getUsernameByIdModel } from '../../models/pharmacist/getUsernameByIdModel';
+import { getUsernameByIdModel } from '../../models/pharmacist/getUsernameByIdModel/getUsernameByIdModel';
 import Context from '../../types/context';
 import {
     GetUsernameByIdInput,
@@ -16,5 +16,5 @@ export const getUsernameByIdResolver = async (
     const response = await getUsernameByIdModel(context, args.input.userId);
     return {
         username: response,
-    }
-}
+    };
+};

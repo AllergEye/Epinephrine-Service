@@ -1,3 +1,3 @@
 export interface GetUserByIdResponseFromPharmacist {
-    username: string
+    username: string;
 }
