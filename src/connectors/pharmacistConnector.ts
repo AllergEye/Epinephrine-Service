@@ -4,6 +4,8 @@ import { PHARMACIST_SERVICE_URL } from '../lib/config';
 import Context from '../types/context';
 import { promisify } from 'util';
 import {
+    AuthenticateUserRequest,
+    AuthenticateUserResponse,
     CreateUserRequest,
     CreateUserResponse,
     GetUserByIdRequest,
@@ -41,5 +43,22 @@ export const createUser = async (
 
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const response: any = await createUserPromise(request);
+    return response;
+};
+
+export const authenticateUser = async (
+    context: Context,
+    email: string,
+    password: string
+): Promise<AuthenticateUserResponse> => {
+    const authenticateUserPromise = promisify(client.authenticateUser).bind(
+        client
+    );
+    const request = new AuthenticateUserRequest();
+    request.setEmail(email);
+    request.setPassword(password);
+
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    const response: any = await authenticateUserPromise(request);
     return response;
 };

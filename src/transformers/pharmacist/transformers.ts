@@ -1,7 +1,7 @@
 import { CreateUserResponse } from '../../../proto/pharmacist_api_pb';
 import { TokenPairResponseFromPharmacist } from '../../types/pharmacist';
 
-export const transformCreateUserResponse = (
+export const transformTokenPairResponse = (
     createUserResponse: CreateUserResponse
 ): TokenPairResponseFromPharmacist => {
     return {

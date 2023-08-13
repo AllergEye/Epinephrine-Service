@@ -1,8 +1,10 @@
 import { getUsernameByIdModel } from '../../models/pharmacist/getUsernameByIdModel/getUsernameByIdModel';
 import { createUserModel } from '../../models/pharmacist/createUserModel/createUserModel';
+import { authenticateUserModel } from '../../models/pharmacist/authenticateUserModel/authenticateUserModel';
 import Context from '../../types/context';
 import {
     CreateUserInput,
+    AuthenticateUserInput,
     TokenPairResponse,
     GetUsernameByIdInput,
     GetUsernameByIdResponse,
@@ -35,6 +37,24 @@ export const createUserResolver = async (
         args.input.email,
         args.input.firstName,
         args.input.lastName,
+        args.input.password
+    );
+    return {
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
+    };
+};
+
+export const authenticateUserResolver = async (
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    parent: any,
+    args: { input: AuthenticateUserInput },
+    context: Context
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+): Promise<TokenPairResponse> => {
+    const response = await authenticateUserModel(
+        context,
+        args.input.email,
         args.input.password
     );
     return {

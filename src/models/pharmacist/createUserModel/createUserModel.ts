@@ -1,7 +1,7 @@
 import Context from '../../../types/context';
 import { createUser as createUserConnector } from '../../../connectors/pharmacistConnector';
 import { TokenPairResponseFromPharmacist } from '../../../types/pharmacist';
-import { transformCreateUserResponse } from '../../../transformers/pharmacist/transformers';
+import { transformTokenPairResponse } from '../../../transformers/pharmacist/transformers';
 import { createUserErrorHandler } from './createUserErrorHandler';
 
 export const createUserModel = async (
@@ -12,14 +12,14 @@ export const createUserModel = async (
     password: string
 ): Promise<TokenPairResponseFromPharmacist> => {
     try {
-        const createUserResponse = await createUserConnector(
+        const tokenPairResponse = await createUserConnector(
             context,
             email,
             firstName,
             lastName,
             password
         );
-        const transformed = transformCreateUserResponse(createUserResponse);
+        const transformed = transformTokenPairResponse(tokenPairResponse);
 
         return transformed;
     } catch (error) {

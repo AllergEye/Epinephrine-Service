@@ -14,6 +14,13 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AuthenticateUserInput = {
+  /** The user's email */
+  email: Scalars['String']['input'];
+  /** The user's password */
+  password: Scalars['String']['input'];
+};
+
 export type CreateUserInput = {
   /** The user's email */
   email: Scalars['String']['input'];
@@ -38,8 +45,15 @@ export type GetUsernameByIdResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** The mutation used by a user to log in */
+  authenticateUser?: Maybe<TokenPairResponse>;
   /** The mutation used by a user to sign up */
   createUser?: Maybe<TokenPairResponse>;
+};
+
+
+export type MutationAuthenticateUserArgs = {
+  input?: InputMaybe<AuthenticateUserInput>;
 };
 
 

@@ -3,6 +3,7 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { readFileSync } from 'fs';
 import Context from './types/context';
 import {
+    authenticateUserResolver,
     createUserResolver,
     getUsernameByIdResolver,
 } from './resolvers/pharmacist/resolvers';
@@ -15,6 +16,7 @@ const resolvers = {
     },
     Mutation: {
         createUser: createUserResolver,
+        authenticateUser: authenticateUserResolver,
     },
 };
 

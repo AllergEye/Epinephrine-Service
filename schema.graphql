@@ -3,6 +3,10 @@ type Mutation {
     The mutation used by a user to sign up
     """
     createUser(input: CreateUserInput): TokenPairResponse
+    """
+    The mutation used by a user to log in
+    """
+    authenticateUser(input: AuthenticateUserInput): TokenPairResponse
 }
 
 type Query {
@@ -25,6 +29,17 @@ input CreateUserInput {
     The user's last name
     """
     lastName: String!
+    """
+    The user's password
+    """
+    password: String!
+}
+
+input AuthenticateUserInput {
+    """
+    The user's email
+    """
+    email: String!
     """
     The user's password
     """
