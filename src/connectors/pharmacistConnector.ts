@@ -4,6 +4,8 @@ import { PHARMACIST_SERVICE_URL } from '../lib/config';
 import Context from '../types/context';
 import { promisify } from 'util';
 import {
+    CreateUserRequest,
+    CreateUserResponse,
     GetUserByIdRequest,
     GetUserByIdResponse,
 } from '../../proto/pharmacist_api_pb';
@@ -20,5 +22,24 @@ export const getUserById = async (
 
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const response: any = await getUserByIdPromise(request);
+    return response;
+};
+
+export const createUser = async (
+    context: Context,
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string
+): Promise<CreateUserResponse> => {
+    const createUserPromise = promisify(client.createUser).bind(client);
+    const request = new CreateUserRequest();
+    request.setEmail(email);
+    request.setFirstname(firstName);
+    request.setLastname(lastName);
+    request.setPassword(password);
+
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    const response: any = await createUserPromise(request);
     return response;
 };
