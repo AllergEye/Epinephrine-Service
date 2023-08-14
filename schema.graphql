@@ -7,6 +7,12 @@ type Mutation {
     The mutation used by a user to log in
     """
     authenticateUser(input: AuthenticateUserInput): TokenPairResponse
+    """
+    The mutation used to regenerate an access token from a refresh token
+    """
+    generateAccessTokenFromRefreshToken(
+        input: GenerateAccessTokenFromRefreshTokenInput
+    ): TokenPairResponse
 }
 
 type Query {
@@ -44,6 +50,13 @@ input AuthenticateUserInput {
     The user's password
     """
     password: String!
+}
+
+input GenerateAccessTokenFromRefreshTokenInput {
+    """
+    The user's refresh token
+    """
+    refreshToken: String!
 }
 
 type TokenPairResponse {

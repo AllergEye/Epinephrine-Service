@@ -10,6 +10,8 @@ import {
     CreateUserResponse,
     GetUserByIdRequest,
     GetUserByIdResponse,
+    GenerateAccessTokenFromRefreshTokenRequest,
+    GenerateAccessTokenFromRefreshTokenResponse,
 } from '../../proto/pharmacist_api_pb';
 
 const client = new AuthClient(PHARMACIST_SERVICE_URL, credentials.createSsl());
@@ -60,5 +62,23 @@ export const authenticateUser = async (
 
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const response: any = await authenticateUserPromise(request);
+    return response;
+};
+
+export const generateAccessTokenFromRefreshToken = async (
+    context: Context,
+    refreshToken: string
+): Promise<GenerateAccessTokenFromRefreshTokenResponse> => {
+    const generateAccessTokenFromRefreshTokenPromise = promisify(
+        client.generateAccessTokenFromRefreshToken
+    ).bind(client);
+
+    const request = new GenerateAccessTokenFromRefreshTokenRequest();
+    request.setRefreshtoken(refreshToken);
+
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    const response: any = await generateAccessTokenFromRefreshTokenPromise(
+        request
+    );
     return response;
 };

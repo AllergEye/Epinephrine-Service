@@ -32,6 +32,11 @@ export type CreateUserInput = {
   password: Scalars['String']['input'];
 };
 
+export type GenerateAccessTokenFromRefreshTokenInput = {
+  /** The user's refresh token */
+  refreshToken: Scalars['String']['input'];
+};
+
 export type GetUsernameByIdInput = {
   /** The user's id */
   userId: Scalars['ID']['input'];
@@ -49,6 +54,8 @@ export type Mutation = {
   authenticateUser?: Maybe<TokenPairResponse>;
   /** The mutation used by a user to sign up */
   createUser?: Maybe<TokenPairResponse>;
+  /** The mutation used to regenerate an access token from a refresh token */
+  generateAccessTokenFromRefreshToken?: Maybe<TokenPairResponse>;
 };
 
 
@@ -59,6 +66,11 @@ export type MutationAuthenticateUserArgs = {
 
 export type MutationCreateUserArgs = {
   input?: InputMaybe<CreateUserInput>;
+};
+
+
+export type MutationGenerateAccessTokenFromRefreshTokenArgs = {
+  input?: InputMaybe<GenerateAccessTokenFromRefreshTokenInput>;
 };
 
 export type Query = {

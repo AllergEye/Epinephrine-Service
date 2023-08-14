@@ -5,6 +5,7 @@ import Context from './types/context';
 import {
     authenticateUserResolver,
     createUserResolver,
+    generateAccessTokenFromRefreshTokenResolver,
     getUsernameByIdResolver,
 } from './resolvers/pharmacist/resolvers';
 
@@ -17,6 +18,8 @@ const resolvers = {
     Mutation: {
         createUser: createUserResolver,
         authenticateUser: authenticateUserResolver,
+        generateAccessTokenFromRefreshToken:
+            generateAccessTokenFromRefreshTokenResolver,
     },
 };
 
