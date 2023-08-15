@@ -77,11 +77,39 @@ export type Query = {
   __typename?: 'Query';
   /** The query to get a user's username by their id */
   getUsernameById?: Maybe<GetUsernameByIdResponse>;
+  /** The query to get all restaurants */
+  restaurants?: Maybe<Array<Maybe<Restaurant>>>;
 };
 
 
 export type QueryGetUsernameByIdArgs = {
   input?: InputMaybe<GetUsernameByIdInput>;
+};
+
+export type Restaurant = {
+  __typename?: 'Restaurant';
+  /** The restaurant's ID */
+  id: Scalars['ID']['output'];
+  /** Restaurant's locations */
+  locations?: Maybe<Array<Maybe<RestaurantLocations>>>;
+  /** Restaurant's name */
+  name: Scalars['String']['output'];
+};
+
+export type RestaurantLocations = {
+  __typename?: 'RestaurantLocations';
+  /** The restaurant's city */
+  city: Scalars['String']['output'];
+  /** The restaurant's country - 2 letter country code */
+  country: Scalars['String']['output'];
+  /** The restaurant's postal/zip code - both Canadian and US restaurants will use this postalCode field */
+  postalCode: Scalars['String']['output'];
+  /** The restaurant's province/state - both Canadian and US restaurants will use this province field */
+  province: Scalars['String']['output'];
+  /** The restaurant's street sddress line 1 */
+  streetAddressLine1: Scalars['String']['output'];
+  /** The restaurant's street sddress line 2 - can be null */
+  streetAddressLine2?: Maybe<Scalars['String']['output']>;
 };
 
 export type TokenPairResponse = {

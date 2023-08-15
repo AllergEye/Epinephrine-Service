@@ -20,6 +20,10 @@ type Query {
     The query to get a user's username by their id
     """
     getUsernameById(input: GetUsernameByIdInput): GetUsernameByIdResponse
+    """
+    The query to get all restaurants
+    """
+    restaurants: [Restaurant]
 }
 
 input CreateUserInput {
@@ -82,4 +86,46 @@ type GetUsernameByIdResponse {
     The user's username
     """
     username: String
+}
+
+type Restaurant {
+    """
+    The restaurant's ID
+    """
+    id: ID!
+    """
+    Restaurant's name
+    """
+    name: String!
+    """
+    Restaurant's locations
+    """
+    locations: [RestaurantLocations]
+}
+
+type RestaurantLocations {
+    """
+    The restaurant's street sddress line 1
+    """
+    streetAddressLine1: String!
+    """
+    The restaurant's street sddress line 2 - can be null
+    """
+    streetAddressLine2: String
+    """
+    The restaurant's city
+    """
+    city: String!
+    """
+    The restaurant's province/state - both Canadian and US restaurants will use this province field
+    """
+    province: String!
+    """
+    The restaurant's country - 2 letter country code
+    """
+    country: String!
+    """
+    The restaurant's postal/zip code - both Canadian and US restaurants will use this postalCode field
+    """
+    postalCode: String!
 }

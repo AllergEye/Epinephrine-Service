@@ -8,12 +8,14 @@ import {
     generateAccessTokenFromRefreshTokenResolver,
     getUsernameByIdResolver,
 } from './resolvers/pharmacist/resolvers';
+import { restaurantsResolver } from './resolvers/surveyor/resolvers';
 
 const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' });
 
 const resolvers = {
     Query: {
         getUsernameById: getUsernameByIdResolver,
+        restaurants: restaurantsResolver,
     },
     Mutation: {
         createUser: createUserResolver,
