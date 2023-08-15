@@ -16,3 +16,23 @@ export interface RestaurantLocationsResponseFromSuveyor {
     Country: string;
     PostalCode: string;
 }
+
+export interface RestaurantIdFromParentResolver {
+    id: string;
+}
+
+export interface GetDishesForRestaurantResponseFromSurveyor {
+    dishes: [DishesResponseFromSurveyor];
+}
+
+export interface DishesResponseFromSurveyor {
+    DishId: string;
+    Name: string;
+    Allergens: [AllergensResponseFromSurveyor];
+}
+
+export interface AllergensResponseFromSurveyor {
+    Name: string;
+    IsProbabilityKnown: boolean;
+    Probability: number;
+}

@@ -1,6 +1,13 @@
-import { Restaurant, RestaurantLocations } from '../../types/generated';
 import {
+    Dish,
+    DishAllergen,
+    Restaurant,
+    RestaurantLocations,
+} from '../../types/generated';
+import {
+    AllergensResponseFromSurveyor,
     GetAllRestaurantsResponseFromSurveyor,
+    GetDishesForRestaurantResponseFromSurveyor,
     RestaurantLocationsResponseFromSuveyor,
     RestaurantResponseFromSurveyor,
 } from '../../types/surveyor';
@@ -38,4 +45,33 @@ export const transformLocations = (
     });
 
     return locations;
+};
+
+export const transformDishesForRestaurant = (
+    dishesForRestaurant: GetDishesForRestaurantResponseFromSurveyor
+): Dish[] => {
+    const dishes: Dish[] = [];
+    dishesForRestaurant.dishes.forEach((dish) => {
+        dishes.push({
+            name: dish.Name,
+            allergens: transformAllergens(dish.Allergens),
+        });
+    });
+
+    return dishes;
+};
+
+export const transformAllergens = (
+    allergensForDish: AllergensResponseFromSurveyor[]
+): DishAllergen[] => {
+    const allergens: DishAllergen[] = [];
+    allergensForDish.forEach((allergen) => {
+        allergens.push({
+            name: allergen.Name,
+            isProbabilityKnown: allergen.IsProbabilityKnown,
+            probability: allergen.Probability,
+        });
+    });
+
+    return allergens;
 };

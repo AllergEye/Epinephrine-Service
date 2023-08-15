@@ -32,6 +32,24 @@ export type CreateUserInput = {
   password: Scalars['String']['input'];
 };
 
+export type Dish = {
+  __typename?: 'Dish';
+  /** The dish's allergens */
+  allergens?: Maybe<Array<Maybe<DishAllergen>>>;
+  /** The name of the dish */
+  name: Scalars['String']['output'];
+};
+
+export type DishAllergen = {
+  __typename?: 'DishAllergen';
+  /** Is the probability of this allergen confirmed */
+  isProbabilityKnown: Scalars['Boolean']['output'];
+  /** The name of the allergen */
+  name: Scalars['String']['output'];
+  /** The probability that the allergen is present in the given dish */
+  probability: Scalars['Int']['output'];
+};
+
 export type GenerateAccessTokenFromRefreshTokenInput = {
   /** The user's refresh token */
   refreshToken: Scalars['String']['input'];
@@ -88,6 +106,8 @@ export type QueryGetUsernameByIdArgs = {
 
 export type Restaurant = {
   __typename?: 'Restaurant';
+  /** Restaurant's dishes */
+  dishes?: Maybe<Array<Maybe<Dish>>>;
   /** The restaurant's ID */
   id: Scalars['ID']['output'];
   /** Restaurant's locations */

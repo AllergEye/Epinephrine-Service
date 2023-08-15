@@ -101,6 +101,10 @@ type Restaurant {
     Restaurant's locations
     """
     locations: [RestaurantLocations]
+    """
+    Restaurant's dishes
+    """
+    dishes: [Dish]
 }
 
 type RestaurantLocations {
@@ -128,4 +132,30 @@ type RestaurantLocations {
     The restaurant's postal/zip code - both Canadian and US restaurants will use this postalCode field
     """
     postalCode: String!
+}
+
+type Dish {
+    """
+    The name of the dish
+    """
+    name: String!
+    """
+    The dish's allergens
+    """
+    allergens: [DishAllergen]
+}
+
+type DishAllergen {
+    """
+    The name of the allergen
+    """
+    name: String!
+    """
+    Is the probability of this allergen confirmed
+    """
+    isProbabilityKnown: Boolean!
+    """
+    The probability that the allergen is present in the given dish
+    """
+    probability: Int!
 }

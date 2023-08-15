@@ -1,7 +1,10 @@
 import axios from 'axios';
 import Context from '../types/context';
 import { SURVEYOR_SERVICE_URL } from '../lib/config';
-import { GetAllRestaurantsResponseFromSurveyor } from '../types/surveyor';
+import {
+    GetAllRestaurantsResponseFromSurveyor,
+    GetDishesForRestaurantResponseFromSurveyor,
+} from '../types/surveyor';
 
 const client = axios.create({
     baseURL: SURVEYOR_SERVICE_URL,
@@ -17,4 +20,16 @@ export const getAllRestaurants = async (
     );
 
     return restaurants.data;
+};
+
+export const getDishesForRestaurant = async (
+    context: Context,
+    restaurantId: string
+): Promise<GetDishesForRestaurantResponseFromSurveyor> => {
+    const dishesForRestaurant =
+        await client.get<GetDishesForRestaurantResponseFromSurveyor>(
+            `/dish/${restaurantId}`
+        );
+
+    return dishesForRestaurant.data;
 };
