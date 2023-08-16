@@ -38,6 +38,11 @@ const server = new ApolloServer<Context>({
 
 (async () => {
     const { url } = await startStandaloneServer(server, {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        context: async ({ req, res }) => {
+            const accessToken = req.headers.authorization || '';
+            return { accessToken };
+        },
         listen: { port: 4000 },
     });
     console.log(`Server ready at ${url}`);

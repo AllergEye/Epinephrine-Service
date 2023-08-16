@@ -28,7 +28,7 @@ export const getDishesForRestaurant = async (
 ): Promise<GetDishesForRestaurantResponseFromSurveyor> => {
     const dishesForRestaurant =
         await client.get<GetDishesForRestaurantResponseFromSurveyor>(
-            `/dish/${restaurantId}`
+            `/restaurant/${restaurantId}/dishes`
         );
 
     return dishesForRestaurant.data;
