@@ -13,6 +13,10 @@ type Mutation {
     generateAccessTokenFromRefreshToken(
         input: GenerateAccessTokenFromRefreshTokenInput
     ): TokenPairResponse
+    """
+    The mutation used by an authenticated user to add a restaurant
+    """
+    addRestaurant(input: AddRestaurantInput): AddRestaurantResponse
 }
 
 type Query {
@@ -100,14 +104,14 @@ type Restaurant {
     """
     Restaurant's locations
     """
-    locations: [RestaurantLocations]
+    locations: [Location!]!
     """
     Restaurant's dishes
     """
     dishes: [Dish]
 }
 
-type RestaurantLocations {
+type Location {
     """
     The restaurant's street sddress line 1
     """
@@ -158,4 +162,76 @@ type DishAllergen {
     The probability that the allergen is present in the given dish
     """
     probability: Int!
+}
+
+input AddRestaurantInput {
+    """
+    The restaurant's name
+    """
+    name: String!
+    """
+    The restaurant's locations
+    """
+    locations: [RestaurantLocationInput!]!
+    """
+    The restaurant's dishes
+    """
+    dishes: [RestaurantDishInput!]!
+}
+
+input RestaurantLocationInput {
+    """
+    The restaurant's street sddress line 1
+    """
+    streetAddressLine1: String!
+    """
+    The restaurant's street sddress line 2 - can be null
+    """
+    streetAddressLine2: String
+    """
+    The restaurant's city
+    """
+    city: String!
+    """
+    The restaurant's province/state - both Canadian and US restaurants will use this province field
+    """
+    province: String!
+    """
+    The restaurant's country - 2 letter country code
+    """
+    country: String!
+    """
+    The restaurant's postal/zip code - both Canadian and US restaurants will use this postalCode field
+    """
+    postalCode: String!
+}
+
+input RestaurantDishInput {
+    """
+    The name of the dish
+    """
+    name: String!
+    """
+    The dish's allergens
+    """
+    allergens: [DishAllergenInput]
+}
+
+input DishAllergenInput {
+    """
+    The name of the allergen
+    """
+    name: String!
+    """
+    Is the probability of this allergen confirmed
+    """
+    isProbabilityKnown: Boolean!
+    """
+    The probability that the allergen is present in the given dish
+    """
+    probability: Int!
+}
+
+type AddRestaurantResponse {
+    restaurant: Restaurant
 }

@@ -14,6 +14,20 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AddRestaurantInput = {
+  /** The restaurant's dishes */
+  dishes: Array<RestaurantDishInput>;
+  /** The restaurant's locations */
+  locations: Array<RestaurantLocationInput>;
+  /** The restaurant's name */
+  name: Scalars['String']['input'];
+};
+
+export type AddRestaurantResponse = {
+  __typename?: 'AddRestaurantResponse';
+  restaurant?: Maybe<Restaurant>;
+};
+
 export type AuthenticateUserInput = {
   /** The user's email */
   email: Scalars['String']['input'];
@@ -50,6 +64,15 @@ export type DishAllergen = {
   probability: Scalars['Int']['output'];
 };
 
+export type DishAllergenInput = {
+  /** Is the probability of this allergen confirmed */
+  isProbabilityKnown: Scalars['Boolean']['input'];
+  /** The name of the allergen */
+  name: Scalars['String']['input'];
+  /** The probability that the allergen is present in the given dish */
+  probability: Scalars['Int']['input'];
+};
+
 export type GenerateAccessTokenFromRefreshTokenInput = {
   /** The user's refresh token */
   refreshToken: Scalars['String']['input'];
@@ -66,14 +89,37 @@ export type GetUsernameByIdResponse = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
+export type Location = {
+  __typename?: 'Location';
+  /** The restaurant's city */
+  city: Scalars['String']['output'];
+  /** The restaurant's country - 2 letter country code */
+  country: Scalars['String']['output'];
+  /** The restaurant's postal/zip code - both Canadian and US restaurants will use this postalCode field */
+  postalCode: Scalars['String']['output'];
+  /** The restaurant's province/state - both Canadian and US restaurants will use this province field */
+  province: Scalars['String']['output'];
+  /** The restaurant's street sddress line 1 */
+  streetAddressLine1: Scalars['String']['output'];
+  /** The restaurant's street sddress line 2 - can be null */
+  streetAddressLine2?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  /** The mutation used by an authenticated user to add a restaurant */
+  addRestaurant?: Maybe<AddRestaurantResponse>;
   /** The mutation used by a user to log in */
   authenticateUser?: Maybe<TokenPairResponse>;
   /** The mutation used by a user to sign up */
   createUser?: Maybe<TokenPairResponse>;
   /** The mutation used to regenerate an access token from a refresh token */
   generateAccessTokenFromRefreshToken?: Maybe<TokenPairResponse>;
+};
+
+
+export type MutationAddRestaurantArgs = {
+  input?: InputMaybe<AddRestaurantInput>;
 };
 
 
@@ -111,25 +157,31 @@ export type Restaurant = {
   /** The restaurant's ID */
   id: Scalars['ID']['output'];
   /** Restaurant's locations */
-  locations?: Maybe<Array<Maybe<RestaurantLocations>>>;
+  locations: Array<Location>;
   /** Restaurant's name */
   name: Scalars['String']['output'];
 };
 
-export type RestaurantLocations = {
-  __typename?: 'RestaurantLocations';
+export type RestaurantDishInput = {
+  /** The dish's allergens */
+  allergens?: InputMaybe<Array<InputMaybe<DishAllergenInput>>>;
+  /** The name of the dish */
+  name: Scalars['String']['input'];
+};
+
+export type RestaurantLocationInput = {
   /** The restaurant's city */
-  city: Scalars['String']['output'];
+  city: Scalars['String']['input'];
   /** The restaurant's country - 2 letter country code */
-  country: Scalars['String']['output'];
+  country: Scalars['String']['input'];
   /** The restaurant's postal/zip code - both Canadian and US restaurants will use this postalCode field */
-  postalCode: Scalars['String']['output'];
+  postalCode: Scalars['String']['input'];
   /** The restaurant's province/state - both Canadian and US restaurants will use this province field */
-  province: Scalars['String']['output'];
+  province: Scalars['String']['input'];
   /** The restaurant's street sddress line 1 */
-  streetAddressLine1: Scalars['String']['output'];
+  streetAddressLine1: Scalars['String']['input'];
   /** The restaurant's street sddress line 2 - can be null */
-  streetAddressLine2?: Maybe<Scalars['String']['output']>;
+  streetAddressLine2?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TokenPairResponse = {

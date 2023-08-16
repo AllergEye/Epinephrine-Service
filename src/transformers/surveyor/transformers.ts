@@ -2,7 +2,7 @@ import {
     Dish,
     DishAllergen,
     Restaurant,
-    RestaurantLocations,
+    Location,
 } from '../../types/generated';
 import {
     AllergensResponseFromSurveyor,
@@ -31,8 +31,8 @@ export const transformRestaurants = (
 
 export const transformLocations = (
     restaurantLocations: RestaurantLocationsResponseFromSuveyor[]
-): RestaurantLocations[] => {
-    const locations: RestaurantLocations[] = [];
+): Location[] => {
+    const locations: Location[] = [];
     restaurantLocations.forEach((location) => {
         locations.push({
             streetAddressLine1: location.StreetAddressLine1,
