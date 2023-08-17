@@ -1,7 +1,13 @@
 import { getDishesForRestaurantModel } from '../../models/surveyor/getDishesForRestaurantModel/getDishesForRestaurantModel';
 import { getAllRestaurantsModel } from '../../models/surveyor/getAllRestaurantsModel/getAllRestaurantsModel';
+import { addRestaurantModel } from '../../models/surveyor/addRestaurantModel/addRestaurantModel';
 import Context from '../../types/context';
-import { Restaurant, Dish } from '../../types/generated';
+import {
+    Restaurant,
+    Dish,
+    AddRestaurantInput,
+    AddRestaurantResponse,
+} from '../../types/generated';
 import { RestaurantIdFromParentResolver } from '../../types/surveyor';
 
 export const restaurantsResolver = async (
@@ -26,4 +32,16 @@ export const dishesResolver = async (
     info: any
 ): Promise<Dish[]> => {
     return getDishesForRestaurantModel(context, restaurantId);
+};
+
+export const addRestaurantResolver = async (
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    parent: any,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    args: { input: AddRestaurantInput },
+    context: Context,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+    info: any
+): Promise<AddRestaurantResponse> => {
+    return addRestaurantModel(context, args.input);
 };

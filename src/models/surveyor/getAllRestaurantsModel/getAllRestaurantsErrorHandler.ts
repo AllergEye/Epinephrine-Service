@@ -8,8 +8,8 @@ export const getAllRestaurantsErrorHandler = (
     error: any
 ): GraphQLError => {
     if (axios.isAxiosError(error)) {
-        if (error.code) {
-            switch (error.code) {
+        if (error.response) {
+            switch (error.response.status) {
                 default:
                     return new GraphQLError('an unknown error occurred');
             }

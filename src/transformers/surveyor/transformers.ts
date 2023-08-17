@@ -3,16 +3,24 @@ import {
     DishAllergen,
     Restaurant,
     Location,
+    RestaurantLocationInput,
+    RestaurantDishInput,
+    DishAllergenInput,
+    AddRestaurantInput,
 } from '../../types/generated';
 import {
-    AllergensResponseFromSurveyor,
+    AllergenResponseFromSurveyor,
     GetAllRestaurantsResponseFromSurveyor,
     GetDishesForRestaurantResponseFromSurveyor,
+    AddLocationRequestToSurveyor,
     RestaurantLocationsResponseFromSuveyor,
+    AddRestaurantRequestToSurveyor,
     RestaurantResponseFromSurveyor,
+    AddDishRequestToSurveyor,
+    AddAllergenRequestToSurveyor,
 } from '../../types/surveyor';
 
-export const transformRestaurants = (
+export const transformRestaurantResponse = (
     restaurantResponse: GetAllRestaurantsResponseFromSurveyor
 ): Restaurant[] => {
     const restaurants: Restaurant[] = [];
@@ -22,14 +30,14 @@ export const transformRestaurants = (
             restaurants.push({
                 id: restaurant.RestaurantId,
                 name: restaurant.Name,
-                locations: transformLocations(restaurant.Locations),
+                locations: transformLocationResponse(restaurant.Locations),
             })
     );
 
     return restaurants;
 };
 
-export const transformLocations = (
+export const transformLocationResponse = (
     restaurantLocations: RestaurantLocationsResponseFromSuveyor[]
 ): Location[] => {
     const locations: Location[] = [];
@@ -47,22 +55,22 @@ export const transformLocations = (
     return locations;
 };
 
-export const transformDishesForRestaurant = (
+export const transformDishesForRestaurantResponse = (
     dishesForRestaurant: GetDishesForRestaurantResponseFromSurveyor
 ): Dish[] => {
     const dishes: Dish[] = [];
     dishesForRestaurant.dishes.forEach((dish) => {
         dishes.push({
             name: dish.Name,
-            allergens: transformAllergens(dish.Allergens),
+            allergens: transformAllergenResponse(dish.Allergens),
         });
     });
 
     return dishes;
 };
 
-export const transformAllergens = (
-    allergensForDish: AllergensResponseFromSurveyor[]
+export const transformAllergenResponse = (
+    allergensForDish: AllergenResponseFromSurveyor[]
 ): DishAllergen[] => {
     const allergens: DishAllergen[] = [];
     allergensForDish.forEach((allergen) => {
@@ -74,4 +82,67 @@ export const transformAllergens = (
     });
 
     return allergens;
+};
+
+export const transformAddRestaurantRequest = (
+    restaurant: AddRestaurantInput
+): AddRestaurantRequestToSurveyor => {
+    const restaurantRequest: AddRestaurantRequestToSurveyor = {
+        name: restaurant.name,
+        locations: transformAddLocationRequest(restaurant.locations),
+        dishes: transformAddDishRequest(restaurant.dishes),
+    };
+
+    return restaurantRequest;
+};
+
+export const transformAddLocationRequest = (
+    locations: RestaurantLocationInput[]
+): AddLocationRequestToSurveyor[] => {
+    const locationsToAdd: AddLocationRequestToSurveyor[] = [];
+
+    locations.forEach((location) => {
+        locationsToAdd.push({
+            ...location,
+            streetAddressLine2: String(location?.streetAddressLine2),
+        });
+    });
+
+    return locationsToAdd;
+};
+
+export const transformAddDishRequest = (
+    dishes: RestaurantDishInput[]
+): AddDishRequestToSurveyor[] => {
+    const dishesToAdd: AddDishRequestToSurveyor[] = [];
+    dishes.forEach((dish) => {
+        if (dish.allergens) {
+            dishesToAdd.push({
+                ...dish,
+                allergens: transformAddAllergenRequest(
+                    dish.allergens as DishAllergenInput[]
+                ),
+            });
+        } else {
+            dishesToAdd.push({
+                ...dish,
+                allergens: undefined,
+            });
+        }
+    });
+
+    return dishesToAdd;
+};
+
+export const transformAddAllergenRequest = (
+    allergens: DishAllergenInput[]
+): AddAllergenRequestToSurveyor[] => {
+    const allergensToAdd: AddAllergenRequestToSurveyor[] = [];
+    allergens.forEach((allergen) => {
+        allergensToAdd.push({
+            ...allergen,
+        });
+    });
+
+    return allergensToAdd;
 };

@@ -2,8 +2,10 @@ import axios from 'axios';
 import Context from '../types/context';
 import { SURVEYOR_SERVICE_URL } from '../lib/config';
 import {
+    AddRestaurantResponseFromSurveyor,
     GetAllRestaurantsResponseFromSurveyor,
     GetDishesForRestaurantResponseFromSurveyor,
+    AddRestaurantRequestToSurveyor,
 } from '../types/surveyor';
 
 const client = axios.create({
@@ -32,4 +34,22 @@ export const getDishesForRestaurant = async (
         );
 
     return dishesForRestaurant.data;
+};
+
+export const addRestaurant = async (
+    context: Context,
+    restaurant: AddRestaurantRequestToSurveyor
+): Promise<AddRestaurantResponseFromSurveyor> => {
+    const addRestaurantResponse =
+        await client.post<AddRestaurantResponseFromSurveyor>(
+            '/restaurant',
+            restaurant,
+            {
+                headers: {
+                    Authorization: `Bearer ${context.accessToken}`,
+                },
+            }
+        );
+
+    return addRestaurantResponse.data;
 };

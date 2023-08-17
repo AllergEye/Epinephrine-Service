@@ -22,17 +22,45 @@ export interface RestaurantIdFromParentResolver {
 }
 
 export interface GetDishesForRestaurantResponseFromSurveyor {
-    dishes: [DishesResponseFromSurveyor];
+    dishes: DishResponseFromSurveyor[];
 }
 
-export interface DishesResponseFromSurveyor {
+export interface DishResponseFromSurveyor {
     DishId: string;
     Name: string;
-    Allergens: [AllergensResponseFromSurveyor];
+    Allergens: AllergenResponseFromSurveyor[];
 }
 
-export interface AllergensResponseFromSurveyor {
+export interface AllergenResponseFromSurveyor {
     Name: string;
     IsProbabilityKnown: boolean;
     Probability: number;
 }
+
+export interface AddRestaurantRequestToSurveyor {
+    name: string;
+    locations: AddLocationRequestToSurveyor[];
+    dishes: AddDishRequestToSurveyor[];
+}
+
+export interface AddLocationRequestToSurveyor {
+    streetAddressLine1: string;
+    streetAddressLine2?: string;
+    city: string;
+    province: string;
+    country: string;
+    postalCode: string;
+}
+
+export interface AddDishRequestToSurveyor {
+    name: string;
+    allergens?: AddAllergenRequestToSurveyor[];
+}
+
+export interface AddAllergenRequestToSurveyor {
+    name: string;
+    isProbabilityKnown: boolean;
+    probability: number;
+}
+
+export interface AddRestaurantResponseFromSurveyor {}
