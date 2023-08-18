@@ -14,6 +14,7 @@ import {
     dishesResolver,
     restaurantsResolver,
 } from './resolvers/surveyor/resolvers';
+import { PORT } from './lib/config';
 
 const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' });
 
@@ -47,7 +48,7 @@ const server = new ApolloServer<Context>({
             const accessToken = req.headers.authorization || '';
             return { accessToken };
         },
-        listen: { port: 4000 },
+        listen: { port: +PORT },
     });
     console.log(`Server ready at ${url}`);
 })();

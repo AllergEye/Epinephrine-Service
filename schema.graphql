@@ -34,6 +34,10 @@ type Query {
     The query to get all restaurants
     """
     restaurants: [Restaurant]
+    """
+    The query to get a restaurant by its ID
+    """
+    restaurant(id: ID!): Restaurant
 }
 
 input CreateUserInput {

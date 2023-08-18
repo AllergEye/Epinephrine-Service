@@ -8,7 +8,9 @@
         "lint:fix": "eslint --fix --max-warnings=0",
         "format:fix": "prettier . --write",
         "codegen": "graphql-codegen --config codegen.yml",
-        "start:dev": "nodemon"
+        "start:dev": "nodemon",
+        "build": "tsc -b",
+        "start": "node build/index.js"
     },
     "author": "Reezan Visram",
     "license": "ISC",
