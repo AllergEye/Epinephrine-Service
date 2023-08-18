@@ -14,6 +14,18 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AddDishToRestaurantInput = {
+  /** The dishes to add to the restaurant */
+  dishes: Array<RestaurantDishInput>;
+  /** The ID of the restaurant to add the dish to */
+  restaurantId: Scalars['ID']['input'];
+};
+
+export type AddDishToRestaurantResponse = {
+  __typename?: 'AddDishToRestaurantResponse';
+  restaurant?: Maybe<Restaurant>;
+};
+
 export type AddRestaurantInput = {
   /** The restaurant's dishes */
   dishes: Array<RestaurantDishInput>;
@@ -107,6 +119,8 @@ export type Location = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** The mutation used by an authenticated user to add a dish to a restaurant */
+  addDishToRestaurant?: Maybe<AddDishToRestaurantResponse>;
   /** The mutation used by an authenticated user to add a restaurant */
   addRestaurant?: Maybe<AddRestaurantResponse>;
   /** The mutation used by a user to log in */
@@ -115,6 +129,11 @@ export type Mutation = {
   createUser?: Maybe<TokenPairResponse>;
   /** The mutation used to regenerate an access token from a refresh token */
   generateAccessTokenFromRefreshToken?: Maybe<TokenPairResponse>;
+};
+
+
+export type MutationAddDishToRestaurantArgs = {
+  input?: InputMaybe<AddDishToRestaurantInput>;
 };
 
 

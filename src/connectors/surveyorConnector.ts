@@ -6,6 +6,8 @@ import {
     GetAllRestaurantsResponseFromSurveyor,
     GetDishesForRestaurantResponseFromSurveyor,
     AddRestaurantRequestToSurveyor,
+    AddDishToRestaurantRequestToSurveyor,
+    AddDishToRestaurantResponseFromSurveyor,
 } from '../types/surveyor';
 
 const client = axios.create({
@@ -52,4 +54,22 @@ export const addRestaurant = async (
         );
 
     return addRestaurantResponse.data;
+};
+
+export const addDishToRestaurant = async (
+    context: Context,
+    dish: AddDishToRestaurantRequestToSurveyor
+): Promise<AddDishToRestaurantResponseFromSurveyor> => {
+    const addDishToRestaurantResponse =
+        await client.post<AddDishToRestaurantResponseFromSurveyor>(
+            '/dish',
+            dish,
+            {
+                headers: {
+                    Authorization: `Bearer ${context.accessToken}`,
+                },
+            }
+        );
+
+    return addDishToRestaurantResponse.data;
 };

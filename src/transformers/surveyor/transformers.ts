@@ -7,6 +7,7 @@ import {
     RestaurantDishInput,
     DishAllergenInput,
     AddRestaurantInput,
+    AddDishToRestaurantInput,
 } from '../../types/generated';
 import {
     AllergenResponseFromSurveyor,
@@ -18,6 +19,7 @@ import {
     RestaurantResponseFromSurveyor,
     AddDishRequestToSurveyor,
     AddAllergenRequestToSurveyor,
+    AddDishToRestaurantRequestToSurveyor,
 } from '../../types/surveyor';
 
 export const transformRestaurantResponse = (
@@ -145,4 +147,13 @@ export const transformAddAllergenRequest = (
     });
 
     return allergensToAdd;
+};
+
+export const transformAddDishToRestaurantRequest = (
+    dishToAdd: AddDishToRestaurantInput
+): AddDishToRestaurantRequestToSurveyor => {
+    return {
+        restaurantId: dishToAdd.restaurantId,
+        dishes: transformAddDishRequest(dishToAdd.dishes),
+    };
 };

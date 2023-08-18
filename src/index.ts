@@ -9,6 +9,7 @@ import {
     getUsernameByIdResolver,
 } from './resolvers/pharmacist/resolvers';
 import {
+    addDishToRestaurantResolver,
     addRestaurantResolver,
     dishesResolver,
     restaurantsResolver,
@@ -30,6 +31,7 @@ const resolvers = {
         generateAccessTokenFromRefreshToken:
             generateAccessTokenFromRefreshTokenResolver,
         addRestaurant: addRestaurantResolver,
+        addDishToRestaurant: addDishToRestaurantResolver,
     },
 };
 

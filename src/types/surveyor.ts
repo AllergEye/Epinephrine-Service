@@ -64,3 +64,10 @@ export interface AddAllergenRequestToSurveyor {
 }
 
 export interface AddRestaurantResponseFromSurveyor {}
+
+export interface AddDishToRestaurantRequestToSurveyor {
+    restaurantId: string;
+    dishes: AddDishRequestToSurveyor[];
+}
+
+export interface AddDishToRestaurantResponseFromSurveyor {}

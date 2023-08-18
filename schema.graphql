@@ -17,6 +17,12 @@ type Mutation {
     The mutation used by an authenticated user to add a restaurant
     """
     addRestaurant(input: AddRestaurantInput): AddRestaurantResponse
+    """
+    The mutation used by an authenticated user to add a dish to a restaurant
+    """
+    addDishToRestaurant(
+        input: AddDishToRestaurantInput
+    ): AddDishToRestaurantResponse
 }
 
 type Query {
@@ -232,6 +238,21 @@ input DishAllergenInput {
     probability: Int!
 }
 
+input AddDishToRestaurantInput {
+    """
+    The ID of the restaurant to add the dish to
+    """
+    restaurantId: ID!
+    """
+    The dishes to add to the restaurant
+    """
+    dishes: [RestaurantDishInput!]!
+}
+
 type AddRestaurantResponse {
+    restaurant: Restaurant
+}
+
+type AddDishToRestaurantResponse {
     restaurant: Restaurant
 }
