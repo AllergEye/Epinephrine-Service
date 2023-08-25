@@ -34,6 +34,11 @@ export const createUserResolver = async (
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     info: any
 ): Promise<TokenPairResponse> => {
+    console.log(`Email: ${args.input.email}`);
+    console.log(`firstName: ${args.input.email}`);
+    console.log(`lastName: ${args.input.email}`);
+    console.log(`Password: ${args.input.email}`);
+    console.log(`Email: ${args.input.email}`);
     const response = await createUserModel(
         context,
         args.input.email,
